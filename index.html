@@ -1,95 +1,156 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>My Web Dashboards</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <title>Assignment - 072516</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    html {
+      scroll-behavior: smooth;
+    }
     body {
-      background: linear-gradient(to bottom right, #c2e9fb, #a1c4fd);
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #f4f7ff, #e8f0fe);
     }
-
     .glass {
-      background: rgba(255, 255, 255, 0.3);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
-
     .hover-scale:hover {
-      transform: scale(1.03);
+      transform: scale(1.015);
       transition: all 0.3s ease-in-out;
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col text-gray-800 font-sans">
+<body class="text-gray-800">
 
-  <!-- Header Section -->
-  <header class="flex flex-col items-center justify-center text-center py-16 px-4">
-    <div class="glass p-6 sm:p-8 rounded-3xl shadow-xl w-full max-w-3xl">
-      <img src="images.jpeg" alt="yejun"
-           class="w-20 sm:w-24 h-20 sm:h-24 rounded-full mx-auto border-4 border-white shadow-md mb-4">
-
-      <div class="text-center">
-        <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-900 mb-2">Hello, I'm Syakirah</h1>
-        <p class="text-sm sm:text-base md:text-lg text-gray-700 max-w-xl mx-auto">
-          Welcome to my personal dashboard portal. This site showcases live API-integrated dashboards with full CI/CD on GitHub Pages.
-        </p>
-        <button onclick="document.getElementById('aboutMe').classList.toggle('hidden')"
-                class="mt-4 bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 text-sm sm:text-base">
-          More About Me
-        </button>
-
-        <div id="aboutMe"
-             class="hidden mt-4 text-left bg-white bg-opacity-40 backdrop-blur-md p-4 rounded-lg shadow-md max-w-md mx-auto text-sm sm:text-base">
-          <p><strong>Full Name:</strong> Nur Syakirah Binti Alias</p>
-          <p><strong>Matric Number:</strong> 072516</p>
-          <p><strong>Email:</strong> nursyakirahalias1@gmail.com</p>
-          <p><strong>Phone Number:</strong> +6012-3456789</p>
-        </div>
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full bg-white/70 backdrop-blur-md shadow-md z-50 px-6 py-4">
+    <div class="flex justify-between items-center max-w-6xl mx-auto">
+      <a href="#about" class="text-xl font-extrabold text-gray-900">Syakirah</a>
+      <button id="menuToggle" class="md:hidden text-gray-700 focus:outline-none">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
+        </svg>
+      </button>
+      <div id="menu" class="hidden md:flex space-x-6 text-sm font-medium">
+        <a href="#about-info" class="text-gray-700 hover:text-gray-900 transition">About Me</a>
+        <a href="#dashboard" class="text-gray-700 hover:text-gray-900 transition">Dashboard</a>
+        <a href="#contact" class="text-gray-700 hover:text-gray-900 transition">Contact Me</a>
       </div>
     </div>
-  </header>
+    <div id="mobileMenu" class="md:hidden hidden mt-4 space-y-2 text-sm text-center">
+      <a href="#about-info" class="block text-gray-700 hover:text-gray-900">About Me</a>
+      <a href="#dashboard" class="block text-gray-700 hover:text-gray-900">Dashboard</a>
+      <a href="#contact" class="block text-gray-700 hover:text-gray-900">Contact Me</a>
+    </div>
+  </nav>
 
-  <!-- Dashboard Links Section -->
-  <main class="flex-grow w-full max-w-5xl mx-auto px-4 py-10">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+  <!-- About Me -->
+  <section id="about" class="min-h-screen flex flex-col items-center justify-center text-center px-6 pt-36 pb-12">
+    <img src="images.jpeg" alt="Syakirah" class="w-28 h-28 rounded-full border-4 border-white shadow-lg mb-6" />
+    <h1 class="text-4xl font-extrabold text-gray-900 mb-2">Hello, I'm Syakirah</h1>
+    <p class="text-lg text-gray-600 max-w-xl mb-6">
+      Welcome to my personal dashboard portal. This site showcases live API-integrated dashboards with full CI/CD on GitHub Pages.
+    </p>
+  </section>
 
-      <!-- Weather Dashboard Card -->
+<!-- About Info -->
+<section id="about-info" class="max-w-4xl mx-auto px-6 py-24">
+  <h2 class="text-4xl font-bold text-center text-gray-900 mb-16">About Me</h2>
+
+  <div class="bg-white/50 backdrop-blur-lg shadow-xl rounded-2xl p-10 grid grid-cols-1 md:grid-cols-2 gap-8 text-gray-800 glass">
+    <div>
+      <p class="text-sm text-gray-500 uppercase mb-1">Full Name</p>
+      <h3 class="text-lg font-semibold">Nur Syakirah Binti Alias</h3>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 uppercase mb-1">Matric Number</p>
+      <h3 class="text-lg font-semibold">072516</h3>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 uppercase mb-1">Course</p>
+      <h3 class="text-lg font-semibold">Bachelor of Computer Science (Internet Computing) with honours</h3>
+    </div>
+    <div>
+      <p class="text-sm text-gray-500 uppercase mb-1">Session</p>
+      <h3 class="text-lg font-semibold">2024/2025</h3>
+    </div>
+  </div>
+</section>
+
+
+
+  <!-- Dashboard Section -->
+  <section id="dashboard" class="max-w-6xl mx-auto px-6 py-24">
+    <h2 class="text-3xl font-bold text-gray-900 text-center mb-12">Dashboards</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+      <!-- Weather Dashboard -->
       <a href="weather.html"
-         class="hover-scale glass p-6 rounded-2xl shadow-lg text-center flex flex-col justify-between border border-blue-200 w-full max-w-full">
+         class="hover-scale glass rounded-3xl p-8 flex flex-col justify-between transition-all border border-white shadow-lg">
         <div>
-          <h2 class="text-xl sm:text-2xl font-semibold text-blue-800 mb-2">Weather Monitoring</h2>
-          <p class="text-sm sm:text-base text-gray-700">
-            Get real-time temperature forecasts using OpenWeatherMap API and visualize trends over time.
+          <h3 class="text-2xl font-semibold text-gray-900 mb-3">Weather Monitoring</h3>
+          <p class="text-gray-700 text-sm">
+            Realtime temperature and forecast visualizations powered by OpenWeatherMap.
           </p>
         </div>
-        <button class="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm sm:text-base">
+        <button class="mt-6 bg-gray-900 text-white py-2 px-4 rounded-lg text-sm hover:bg-gray-700">
           Open Dashboard
         </button>
       </a>
 
-      <!-- Social Media Insights Card -->
+      <!-- Social Media Dashboard -->
       <a href="social.html"
-         class="hover-scale glass p-6 rounded-2xl shadow-lg text-center flex flex-col justify-between border border-blue-200 w-full max-w-full">
+         class="hover-scale glass rounded-3xl p-8 flex flex-col justify-between transition-all border border-white shadow-lg">
         <div>
-          <h2 class="text-xl sm:text-2xl font-semibold text-blue-800 mb-2">Social Media Insights</h2>
-            <p class="text-sm sm:text-base text-gray-700">
-              Track YouTube channel performance with real-time data like subscribers, views, top videos, and engagement trends.
-            </p>
+          <h3 class="text-2xl font-semibold text-gray-900 mb-3">Social Media Insights</h3>
+          <p class="text-gray-700 text-sm">
+            Track your YouTube channel's top videos, subscribers, and engagement stats.
+          </p>
         </div>
-        <button class="mt-6 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg text-sm sm:text-base">
+        <button class="mt-6 bg-gray-900 text-white py-2 px-4 rounded-lg text-sm hover:bg-gray-700">
           Open Dashboard
         </button>
       </a>
 
     </div>
-  </main>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="bg-white/60 py-20 px-6">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl font-bold text-gray-900 mb-6">Contact Me</h2>
+      <p class="text-gray-700 mb-6">
+        Feel free to reach out via email or phone.
+      </p>
+      <div class="glass p-6 rounded-xl text-sm text-left w-full max-w-md mx-auto text-gray-800 space-y-2">
+        <p><strong>Email:</strong> nursyakirahalias1@gmail.com</p>
+        <p><strong>Phone:</strong> +6012-3456789</p>
+        <p><strong>Location:</strong> Malaysia</p>
+      </div>
+    </div>
+  </section>
 
   <!-- Footer -->
-  <footer class="text-center text-xs sm:text-sm text-gray-600 py-4 sm:py-6">
-    &copy; 2025 Syakirah. Powered by Tailwind CSS & GitHub Pages.
+  <footer class="text-center text-xs sm:text-sm text-gray-500 py-6">
+    &copy; 2025 Nur Syakirah
   </footer>
+
+  <!-- Mobile Menu Toggle Script -->
+  <script>
+    const menuToggle = document.getElementById("menuToggle");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    menuToggle.addEventListener("click", () => {
+      mobileMenu.classList.toggle("hidden");
+    });
+  </script>
 
 </body>
 </html>
