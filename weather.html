@@ -4,34 +4,45 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weather Dashboard</title>
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-straight/css/uicons-solid-straight.css'>
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-bold-straight/css/uicons-bold-straight.css'>
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #eef4ff, #f7faff);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .hover-card:hover {
+      transform: scale(1.02);
+      transition: all 0.3s ease;
+    }
+  </style>
 </head>
-<body class="bg-blue-100 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col text-gray-800">
 
-  <!-- Mobile Header -->
-<header class="bg-blue-800 text-white px-4 py-5 shadow-md">
-  <div class="flex items-center justify-center relative">
-    <!-- Back icon aligned to left -->
-    <a href="index.html" class="absolute left-4 text-white text-2xl">
-      <i class="fi fi-sr-angle-left"></i>
-    </a>
-    <!-- Centered title -->
-    <h1 class="text-xl font-bold text-center">Weather Dashboard</h1>
-  </div>
-</header>
+  <!-- Header -->
+  <header class="bg-white/70 glass py-6 px-6 shadow-md sticky top-0 z-50">
+    <div class="flex items-center justify-center relative max-w-7xl mx-auto">
+      <a href="index.html" class="absolute left-0 text-gray-700 text-2xl hover:text-gray-900">
+        <i class="fi fi-sr-angle-left"></i>
+      </a>
+      <h1 class="text-xl sm:text-2xl font-extrabold text-center tracking-tight">Weather Dashboard</h1>
+    </div>
+  </header>
 
-
-  <!-- Main Mobile Content -->
-  <main class="flex-grow px-4 py-6 space-y-6">
+  <!-- Main -->
+  <main class="flex-grow px-6 py-12 max-w-7xl mx-auto">
 
     <!-- State Selector -->
-    <div class="bg-white p-4 rounded-xl shadow-md">
-      <label for="stateSelect" class="block mb-2 font-semibold text-gray-700">Select State</label>
+    <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
+      <label for="stateSelect" class="block text-sm font-semibold text-gray-700 mb-2">Select State</label>
       <select id="stateSelect" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
         <option value="">-- Choose State --</option>
         <option value="Johor">Johor</option>
@@ -51,35 +62,35 @@
         <option value="Labuan">Labuan</option>
         <option value="Putrajaya">Putrajaya</option>
       </select>
-    </div>
+    </section>
 
     <!-- Weather Info -->
-  <div id="weatherInfo" class="bg-white p-4 rounded-xl shadow-md hidden">
-    <h2 class="text-lg font-semibold text-gray-800 mb-4">Current Weather</h2>
-    <div class="space-y-2 text-gray-700">
-      <p><strong><i class="fi fi-bs-temperature-high"></i></i></i> Temp:</strong> <span id="tempValue">-- °C</span></p>
-      <p><strong><i class="fi fi-br-wind"></i> Wind:</strong> <span id="windValue">-- km/h</span></p>
-      <p><strong><i class="fi fi-ss-cloud-showers-heavy"></i></i> Rain:</strong> <span id="rainValue">-- mm</span></p>
-    </div>
-  </div>
+    <section id="weatherInfo" class="glass hover-card p-6 rounded-2xl shadow-lg mb-8 hidden">
+      <h2 class="text-xl font-semibold mb-4 text-gray-800">Current Weather</h2>
+      <div class="space-y-2 text-gray-700">
+        <p><strong><i class="fi fi-sr-temperature-high"></i> Temp:</strong> <span id="tempValue">-- °C</span></p>
+        <p><strong><i class="fi fi-sr-wind"></i> Wind:</strong> <span id="windValue">-- km/h</span></p>
+        <p><strong><i class="fi fi-sr-cloud-showers-heavy"></i> Rain:</strong> <span id="rainValue">-- mm</span></p>
+      </div>
+    </section>
 
     <!-- Filter Forecast -->
-    <div class="bg-white p-4 rounded-xl shadow-md">
-      <label for="searchInput" class="block mb-2 font-semibold text-gray-700">Filter Forecast</label>
+    <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
+      <label for="searchInput" class="block text-sm font-semibold text-gray-700 mb-2">Filter Forecast</label>
       <input type="text" id="searchInput" placeholder="e.g. 2025-05-21"
              class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-    </div>
+    </section>
 
     <!-- Forecast Chart -->
-    <div class="bg-white p-4 rounded-xl shadow-md">
-      <h3 class="text-lg font-semibold text-gray-700 mb-2">Temperature Forecast</h3>
-      <canvas id="weatherChart" class="w-full h-56"></canvas>
-    </div>
+    <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
+      <h3 class="text-xl font-semibold text-gray-700 mb-4">Temperature Forecast</h3>
+      <canvas id="weatherChart" class="w-full h-64"></canvas>
+    </section>
 
-  </main> 
+  </main>
 
   <!-- Footer -->
-  <footer class="bg-blue-900 text-white text-center py-4 text-sm">
+  <footer class="text-center py-6 text-sm text-gray-500">
     &copy; 2025 Weather Dashboard. All rights reserved.
   </footer>
 
