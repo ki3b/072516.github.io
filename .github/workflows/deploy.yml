@@ -1,4 +1,4 @@
-name: Deploy Dashboard to GitHub Pages
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -17,4 +17,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./  # Use ./ if your HTML/JS is in the root
+          publish_dir: ./  # This means your files are in the root folder
