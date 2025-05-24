@@ -1,115 +1,122 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>YouTube Analytics Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to bottom right, #eef4ff, #f7faff);
+    }
+    .glass {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .hover-card:hover {
+      transform: scale(1.02);
+      transition: all 0.3s ease;
+    }
+    th, td {
+      white-space: nowrap;
+    }
+  </style>
 </head>
-<body class="bg-blue-100 min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col text-gray-800">
 
-<header class="bg-blue-800 text-white px-4 py-5 shadow-md">
-  <div class="flex items-center justify-center relative">
-    <!-- Back icon aligned to left -->
-    <a href="index.html" class="absolute left-4 text-white text-2xl">
-      <i class="fi fi-sr-angle-left"></i>
-    </a>
-    <!-- Centered title -->
-    <h1 class="text-xl font-bold text-center">YouTube Dashboard</h1>
-  </div>
-</header>
+  <!-- Header -->
+  <header class="bg-white/70 glass py-6 px-6 shadow-md sticky top-0 z-50">
+    <div class="flex items-center justify-center relative max-w-7xl mx-auto">
+      <a href="index.html" class="absolute left-0 text-gray-700 text-2xl hover:text-gray-900">
+        <i class="fi fi-sr-angle-left"></i>
+      </a>
+      <h1 class="text-xl sm:text-2xl font-extrabold text-center tracking-tight">YouTube Analytics Dashboard</h1>
+    </div>
+  </header>
 
+  <!-- Main -->
+  <main class="flex-grow px-6 py-12 max-w-7xl mx-auto">
 
-  <main class="flex-grow container mx-auto px-6 py-10 max-w-7xl">
-<!-- Channel Overview (Mobile-Optimized) -->
-<section aria-label="Channel Overview" class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 mb-10 px-4">
-  <div class="bg-white p-5 shadow-md rounded-xl border border-blue-100">
-    <p class="text-xs text-blue-400 uppercase font-semibold tracking-widest mb-1">Channel Name</p>
-    <p id="channelTitle" class="text-2xl font-bold text-blue-700 truncate" title="Loading...">Loading...</p>
-  </div>
-  <div class="bg-white p-5 shadow-md rounded-xl border border-blue-100">
-    <p class="text-xs text-blue-400 uppercase font-semibold tracking-widest mb-1">Subscribers</p>
-    <p id="subscriberCount" class="text-2xl font-bold text-blue-700">0</p>
-  </div>
-  <div class="bg-white p-5 shadow-md rounded-xl border border-blue-100">
-    <p class="text-xs text-blue-400 uppercase font-semibold tracking-widest mb-1">Total Views</p>
-    <p id="viewCount" class="text-2xl font-bold text-blue-700">0</p>
-  </div>
-  <div class="bg-white p-5 shadow-md rounded-xl border border-blue-100">
-    <p class="text-xs text-blue-400 uppercase font-semibold tracking-widest mb-1">Total Videos</p>
-    <p id="videoCount" class="text-2xl font-bold text-blue-700">0</p>
-  </div>
-</section>
+    <!-- Channel Overview -->
+    <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      <div class="glass hover-card p-6 rounded-2xl shadow-lg">
+        <p class="text-xs uppercase font-semibold text-gray-500 mb-1">Channel Name</p>
+        <p id="channelTitle" class="text-2xl font-bold text-gray-900 truncate" title="Loading...">Loading...</p>
+      </div>
+      <div class="glass hover-card p-6 rounded-2xl shadow-lg">
+        <p class="text-xs uppercase font-semibold text-gray-500 mb-1">Subscribers</p>
+        <p id="subscriberCount" class="text-2xl font-bold text-gray-900">0</p>
+      </div>
+      <div class="glass hover-card p-6 rounded-2xl shadow-lg">
+        <p class="text-xs uppercase font-semibold text-gray-500 mb-1">Total Views</p>
+        <p id="viewCount" class="text-2xl font-bold text-gray-900">0</p>
+      </div>
+      <div class="glass hover-card p-6 rounded-2xl shadow-lg">
+        <p class="text-xs uppercase font-semibold text-gray-500 mb-1">Total Videos</p>
+        <p id="videoCount" class="text-2xl font-bold text-gray-900">0</p>
+      </div>
+    </section>
 
-
-    <!-- Top Videos Table -->
-    <section aria-label="Top Videos" class="mb-16">
-      <h2 class="text-4xl font-extrabold text-blue-600 mb-6 border-b-4 border-blue-300 pb-3 drop-shadow-sm">
-        Top 5 Videos
-      </h2>
-      <div class="bg-white shadow-xl rounded-2xl p-8 overflow-x-auto border border-blue-100">
-        <table class="table-auto w-full text-base text-gray-800">
-          <thead class="text-left text-blue-600 border-b-4 border-blue-300 font-semibold">
+    <!-- Top Videos -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-extrabold mb-4 text-gray-800">Top 5 Videos</h2>
+      <div class="glass p-6 rounded-2xl shadow-lg overflow-x-auto">
+        <table class="table-auto w-full text-sm text-gray-700">
+          <thead class="uppercase text-left text-gray-500 border-b">
             <tr>
-              <th class="py-4 px-8">Title</th>
-              <th class="py-4 px-8">Views</th>
-              <th class="py-4 px-8">Likes</th>
+              <th class="py-3 px-6">Title</th>
+              <th class="py-3 px-6">Views</th>
+              <th class="py-3 px-6">Likes</th>
             </tr>
           </thead>
-          <tbody id="topVideos" class="divide-y divide-blue-100">
-            <!-- JS will populate this -->
+          <tbody id="topVideos" class="divide-y divide-gray-200">
+            <!-- JS will populate -->
           </tbody>
         </table>
       </div>
     </section>
 
-    <!-- All Videos with Search -->
-    <section aria-label="All Videos with Search" class="mb-16">
-      <h2 class="text-3xl font-extrabold text-blue-600 mb-4 border-b-2 border-blue-300 pb-2 drop-shadow-sm">
-        All Videos
-      </h2>
-
-      <div class="mb-4">
-        <input
-          type="text"
-          id="videoSearchAll"
-          placeholder="Search all videos..."
-          class="w-full md:w-1/3 px-4 py-2 rounded-lg border border-blue-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-        />
-      </div>
-
-      <div class="bg-white shadow-xl rounded-2xl p-8 overflow-x-auto border border-blue-100 max-h-96 overflow-y-auto">
-        <table class="table-auto w-full text-base text-gray-800">
-          <thead class="text-left text-blue-600 border-b-4 border-blue-300 font-semibold sticky top-0 bg-white">
+    <!-- All Videos -->
+    <section class="mb-16">
+      <h2 class="text-3xl font-extrabold mb-4 text-gray-800">All Videos</h2>
+      <input type="text" id="videoSearchAll"
+             placeholder="Search all videos..."
+             class="mb-4 w-full sm:w-1/3 px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+      <div class="glass p-6 rounded-2xl shadow-lg overflow-x-auto max-h-[28rem] overflow-y-auto">
+        <table class="table-auto w-full text-sm text-gray-700">
+          <thead class="uppercase text-left text-gray-500 border-b sticky top-0 bg-white/70 backdrop-blur z-10">
             <tr>
-              <th class="py-4 px-8">Title</th>
-              <th class="py-4 px-8">Views</th>
-              <th class="py-4 px-8">Likes</th>
+              <th class="py-3 px-6">Title</th>
+              <th class="py-3 px-6">Views</th>
+              <th class="py-3 px-6">Likes</th>
             </tr>
           </thead>
-          <tbody id="allVideos" class="divide-y divide-blue-100">
-            <!-- JS will populate this -->
+          <tbody id="allVideos" class="divide-y divide-gray-200">
+            <!-- JS will populate -->
           </tbody>
         </table>
       </div>
     </section>
 
     <!-- Chart -->
-    <section aria-label="Views vs Likes Chart">
-      <h2 class="text-4xl font-extrabold text-blue-600 mb-6 border-b-4 border-blue-300 pb-3 drop-shadow-sm">
-        Views vs Likes
-      </h2>
-      <div class="bg-white shadow-xl rounded-2xl p-8 border border-blue-100">
-        <canvas id="videoChart" class="max-h-96"></canvas>
+    <section>
+      <h2 class="text-3xl font-extrabold mb-4 text-gray-800">Views vs Likes</h2>
+      <div class="glass p-6 rounded-2xl shadow-lg">
+        <canvas id="videoChart" class="max-h-96 w-full"></canvas>
       </div>
     </section>
+
   </main>
 
   <!-- Footer -->
-  <footer class="bg-gradient-to-r from-blue-800 to-blue-900 text-white text-center py-5 text-sm font-medium select-none">
-    &copy; 2025 Social Media Dashboard by Syakirah. All rights reserved.
+  <footer class="text-center py-6 text-sm text-gray-500">
+    &copy; 2025 Youtube Dashboard.  All rights reserved.
   </footer>
 
   <script src="social.js"></script>
