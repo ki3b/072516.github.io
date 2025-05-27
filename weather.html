@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8" />  
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Weather Dashboard</title>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <link rel="stylesheet" href="https://cdn-uicons.flaticon.com/2.6.0/uicons-solid-rounded/css/uicons-solid-rounded.css">
+
+  <!-- Fonts and custom styles -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
+
     body {
       font-family: 'Inter', sans-serif;
       background: linear-gradient(to bottom right, #eef4ff, #f7faff);
+      color: #1f2937; /* gray-800 */
     }
     .glass {
       background: rgba(255, 255, 255, 0.25);
@@ -23,69 +28,115 @@
       transform: scale(1.02);
       transition: all 0.3s ease;
     }
+    th, td {
+      white-space: normal !important;
+      word-break: break-word;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col text-gray-800">
+<body class="min-h-screen flex flex-col">
 
   <!-- Header -->
-  <header class="bg-white/70 glass py-6 px-6 shadow-md sticky top-0 z-50">
+  <header class="bg-white/70 glass py-6 px-4 sm:px-6 shadow-md sticky top-0 z-50">
     <div class="flex items-center justify-center relative max-w-7xl mx-auto">
-      <a href="index.html" class="absolute left-0 text-gray-700 text-2xl hover:text-gray-900">
+      <a href="index.html" class="absolute left-0 text-xl sm:text-2xl text-gray-700 hover:text-gray-900" title="Back to Home">
         <i class="fi fi-sr-angle-left"></i>
       </a>
-      <h1 class="text-xl sm:text-2xl font-extrabold text-center tracking-tight">Weather Dashboard</h1>
+      <h1 class="text-lg sm:text-xl md:text-2xl font-extrabold text-center tracking-tight">
+        Weather Dashboard 
+      </h1>
     </div>
   </header>
 
-  <!-- Main -->
-  <main class="flex-grow px-6 py-12 max-w-7xl mx-auto">
+  <!-- Main Content -->
+  <main class="flex-grow max-w-7xl mx-auto w-full px-4 sm:px-6 py-8 sm:py-12">
 
-    <!-- State Selector -->
-    <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
-      <label for="stateSelect" class="block text-sm font-semibold text-gray-700 mb-2">Select State</label>
-      <select id="stateSelect" class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500">
-        <option value="">-- Choose State --</option>
-        <option value="Johor">Johor</option>
-        <option value="Kedah">Kedah</option>
-        <option value="Kelantan">Kelantan</option>
-        <option value="Melaka">Melaka</option>
-        <option value="Negeri Sembilan">Negeri Sembilan</option>
-        <option value="Pahang">Pahang</option>
-        <option value="Perak">Perak</option>
-        <option value="Perlis">Perlis</option>
-        <option value="Pulau Pinang">Pulau Pinang</option>
-        <option value="Sabah">Sabah</option>
-        <option value="Sarawak">Sarawak</option>
-        <option value="Selangor">Selangor</option>
-        <option value="Terengganu">Terengganu</option>
-        <option value="Kuala Lumpur">Kuala Lumpur</option>
-        <option value="Labuan">Labuan</option>
-        <option value="Putrajaya">Putrajaya</option>
-      </select>
-    </section>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 min-h-[600px]">
+      <!-- Left Panel -->
+      <div class="col-span-2 bg-white glass p-8 rounded-2xl shadow-lg">
+        <div class="flex justify-between items-center mb-6">
+          <div>
+            <h1 id="monthYear" class="text-xl font-semibold text-gray-900">Loading...</h1>
+            <p id="date" class="text-sm text-gray-600">Loading...</p>
+          </div>
 
-    <!-- Weather Info -->
-    <section id="weatherInfo" class="glass hover-card p-6 rounded-2xl shadow-lg mb-8 hidden">
-      <h2 class="text-xl font-semibold mb-4 text-gray-800">Current Weather</h2>
-      <div class="space-y-2 text-gray-700">
-        <p><strong><i class="fi fi-sr-temperature-high"></i> Temp:</strong> <span id="tempValue">-- °C</span></p>
-        <p><strong><i class="fi fi-sr-wind"></i> Wind:</strong> <span id="windValue">-- km/h</span></p>
-        <p><strong><i class="fi fi-sr-cloud-showers-heavy"></i> Rain:</strong> <span id="rainValue">-- mm</span></p>
+          <!-- State Finder -->
+          <div class="flex gap-2 items-center">
+            <input id="cityInput" type="text" placeholder="Search location here" 
+              class="px-3 py-1.5 rounded-lg border border-gray-300 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+            <button id="searchBtn" class="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center hover:bg-gray-300" title="Search">🔍</button>
+          </div>
+        </div>
+
+        <h2 class="text-lg font-semibold mb-4 text-gray-800">Today Overview</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
+          <div class="bg-white/70 glass p-4 rounded-lg shadow hover-card">
+            <p class="text-sm text-gray-700">Wind Speed</p>
+            <div class="flex justify-between items-center mt-1">
+              <p id="windSpeed" class="text-xl font-semibold text-gray-900">-- km/h</p>
+              <p id="windChange" class="text-red-500 text-sm"></p>
+            </div>
+          </div>
+          <div class="bg-white/70 glass p-4 rounded-lg shadow hover-card">
+            <p class="text-sm text-gray-700">Rainfall</p>
+            <div class="flex justify-between items-center mt-1">
+              <p id="rainVolume" class="text-xl font-semibold text-gray-900">-- mm</p>
+              <p id="rainChange" class="text-blue-500 text-sm"></p>
+            </div>
+          </div>
+          <div class="bg-white/70 glass p-4 rounded-lg shadow hover-card">
+            <p class="text-sm text-gray-700">Pressure</p>
+            <div class="flex justify-between items-center mt-1">
+              <p id="pressure" class="text-xl font-semibold text-gray-900">-- hPa</p>
+              <p id="pressureChange" class="text-gray-600 text-sm"></p>
+            </div>
+          </div>
+          <div class="bg-white/70 glass p-4 rounded-lg shadow hover-card">
+            <p class="text-sm text-gray-700">Humidity</p>
+            <div class="flex justify-between items-center mt-1">
+              <p id="humidity" class="text-xl font-semibold text-gray-900">--%</p>
+              <p id="humidityChange" class="text-blue-500 text-sm"></p>
+            </div>
+          </div>
+        </div>
+
+        <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
+          <h3 class="text-xl font-semibold text-gray-700 mb-4">Temperature Forecast</h3>
+          <canvas id="weatherChart" class="w-full h-64"></canvas>
+        </section>
       </div>
-    </section>
 
-    <!-- Filter Forecast -->
-    <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
-      <label for="searchInput" class="block text-sm font-semibold text-gray-700 mb-2">Filter Forecast</label>
-      <input type="text" id="searchInput" placeholder="e.g. 2025-05-21"
-             class="w-full p-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500" />
-    </section>
+      <!-- Right Panel -->
+      <div class="bg-gradient-to-br from-indigo-600 to-blue-700 text-white p-8 rounded-2xl shadow-lg flex flex-col justify-between glass">
+        <div>
+          <div class="flex justify-between items-center mb-6">
+            <div>
+              <h2 id="locationName" class="text-lg font-semibold">Loading...</h2>
+              <p id="locationRegion" class="text-sm text-gray-200">Loading...</p>
+            </div>
+            <div id="localTime" class="text-sm text-gray-200">--:--</div>
+          </div>
 
-    <!-- Forecast Chart -->
-    <section class="glass hover-card p-6 rounded-2xl shadow-lg mb-8">
-      <h3 class="text-xl font-semibold text-gray-700 mb-4">Temperature Forecast</h3>
-      <canvas id="weatherChart" class="w-full h-64"></canvas>
-    </section>
+          <div class="my-8">
+            <p id="tempC" class="text-5xl font-bold">--°C</p>
+            <p id="weatherDesc" class="text-xl text-gray-200 mt-2">Loading...</p>
+          </div>
+
+          <div class="mt-10">
+            <h3 class="text-sm font-semibold text-white mb-2">Weather Condition</h3>
+            <div id="weatherCondition" class="space-y-2 text-sm"></div>
+          </div>
+
+          <div class="mt-10">
+            <h3 class="text-sm font-semibold text-white mb-2">Sunrise & Sunset</h3>
+            <div class="space-y-4 text-sm">
+              <div class="bg-white/10 p-3 rounded-xl flex justify-between"><span>Sunrise</span><span id="sunriseTime">--:--</span></div>
+              <div class="bg-white/10 p-3 rounded-xl flex justify-between"><span>Sunset</span><span id="sunsetTime">--:--</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </main>
 
